@@ -45,7 +45,7 @@ export default {
 
     onMounted(() => {
       embed({
-        clip: props.clip,
+        videoUrl: props.clip,
         width: props.width,
         height: props.height,
         autoplay: props.autoplay,

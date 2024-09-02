@@ -1,3 +1,3 @@
 // src/index.ts
-export { default as EmbediaVue } from './vue/components/Embedia.vue';
+export { default as EmbediaVue } from './vue/components/EmbediaVue.vue';
 

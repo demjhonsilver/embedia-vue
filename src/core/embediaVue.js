@@ -40,19 +40,19 @@ const embed = (video) => {
       container.removeChild(container.firstChild);
     }
   
-    if (video.clip.includes("youtube.com") || video.clip.includes("youtu.be")) {
+    if (video.videoUrl.includes("youtube.com") || video.videoUrl.includes("youtu.be")) {
       embedYouTube(video, container, cssname);
-    } else if (video.clip.includes("facebook.com") || video.clip.includes("fb.com")) {
+    } else if (video.videoUrl.includes("facebook.com") || video.videoUrl.includes("fb.com")) {
       embedFacebook(video, container, cssname);
-    } else if (video.clip.includes("tiktok.com") || video.clip.includes("tiktok")) {
+    } else if (video.videoUrl.includes("tiktok.com") || video.videoUrl.includes("tiktok")) {
       embedTiktok(video, container, cssname);
-    } else if (video.clip.includes("twitter.com")) {
+    } else if (video.videoUrl.includes("twitter.com")) {
       embedTwitter(video, container, cssname);
-    } else if (video.clip.includes("vimeo.com")) {
+    } else if (video.videoUrl.includes("vimeo.com")) {
       embedVimeo(video, container, cssname);
-    } else if (video.clip.includes("dailymotion.com") || video.clip.includes("dailymotion")) {
+    } else if (video.videoUrl.includes("dailymotion.com") || video.videoUrl.includes("dailymotion")) {
       embedDailymotion(video, container, cssname);
-    } else if (video.clip.includes("instagram.com") || video.clip.includes("instagram")) {
+    } else if (video.videoUrl.includes("instagram.com") || video.videoUrl.includes("instagram")) {
       embedInstagram(video, container, cssname);
     } else {
       throw new Error("Invalid video URL");

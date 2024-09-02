@@ -6,7 +6,7 @@
 
 # Embedia Vue 
 
-[![npm version](https://img.shields.io/npm/v/embedia-vue.svg?logo=npm&style=flat-square&label=Latest&color=blue)](https://www.npmjs.com/package/embedia-vue)
+[![npm version](https://img.shields.io/npm/v/embedia-vue.svg?logo=npm&style=flat-square&label=Latest&color=darkgreen)](https://www.npmjs.com/package/embedia-vue)
 ![Package Size](https://img.shields.io/bundlephobia/minzip/embedia-vue?style=flat-square&color=yellow)
 ![Downloads](https://img.shields.io/npm/dt/embedia-vue.svg?style=flat-square&label=Downloads&color=red)
 [![License](https://img.shields.io/npm/l/embedia-vue.svg?style=flat-square&label=License&color=green)](https://github.com/demjhonsilver/embedia-vue/blob/main/LICENSE.md)
@@ -52,7 +52,7 @@ Framework | Supported versions
 
 
 Major Changes:
- v1.0.0-alpha.13
+ v1.0.0-alpha.20
  - This library package offers a minimal syntax.
  - Lightweight size 
 
@@ -77,29 +77,29 @@ npm install embedia-vue
 --------
 
 ## Embed-video
-Attributes | Type | ![Facebook](https://img.shields.io/badge/Facebook-%231877F2.svg?style=for-the-badge&logo=Facebook&logoColor=white) | ![Instagram](https://img.shields.io/badge/Instagram-%23E4405F.svg?style=for-the-badge&logo=Instagram&logoColor=white) | ![TikTok](https://img.shields.io/badge/TikTok-%23000000.svg?style=for-the-badge&logo=TikTok&logoColor=white)  | ![Twitter](https://img.shields.io/badge/Twitter-%231DA1F2.svg?style=for-the-badge&logo=Twitter&logoColor=white) ![X](https://img.shields.io/badge/X-%23000000.svg?style=for-the-badge&logo=X&logoColor=white) |
------- | -------- | -------- | ----------|---------- |------------
-`width` | number |  optional | |  | 
-`height` |  number | optional |  |  | 
-`fullscreen` | boolean | optional |  |  |  
-`controls` | boolean | |  |  |  
-`autoplay` | boolean | |  |  |   
-`cssname` | string | required | required | required | required
-`clip` | string | required | required | required | required
+Attributes | ![Facebook](https://img.shields.io/badge/Facebook-%231877F2.svg?style=for-the-badge&logo=Facebook&logoColor=white) | ![Instagram](https://img.shields.io/badge/Instagram-%23E4405F.svg?style=for-the-badge&logo=Instagram&logoColor=white) | ![TikTok](https://img.shields.io/badge/TikTok-%23000000.svg?style=for-the-badge&logo=TikTok&logoColor=white)  | ![Twitter](https://img.shields.io/badge/Twitter-%231DA1F2.svg?style=for-the-badge&logo=Twitter&logoColor=white) ![X](https://img.shields.io/badge/X-%23000000.svg?style=for-the-badge&logo=X&logoColor=white) |
+------ | -------- | ----------|---------- |------------
+Required? `width` | yes | |  | 
+Required? `height` | yes |  |  | 
+Required? `fullscreen` |  optional |  |  |  
+Required? `controls` | |  |  |  
+Required? `autoplay` |  optional |  |  |   
+Required? `cssname` |  optional  | optional | optional |  optional
+Required? `clip` |  yes | yes | yes | yes
 ---------
 
 -------------------
 
 
-Attributes | Type | ![YouTube](https://img.shields.io/badge/YouTube-%23FF0000.svg?style=for-the-badge&logo=YouTube&logoColor=white) | ![Vimeo](https://a11ybadges.com/badge?logo=vimeo) | ![Dailymotion](https://a11ybadges.com/badge?logo=dailymotion) |
------- | -------- | -------- | ----------|----------
-`width` | number | optional | optional | optional
-`height` |  number | optional | optional | optional
-`fullscreen` | boolean | optional | optional | optional
-`controls` | boolean | optional | optional | optional
-`autoplay` | boolean | optional | optional |optional
-`cssname` | string | required | required | required
-`clip` | string | required | required | required
+Attributes | ![YouTube](https://img.shields.io/badge/YouTube-%23FF0000.svg?style=for-the-badge&logo=YouTube&logoColor=white) | ![Vimeo](https://a11ybadges.com/badge?logo=vimeo) | ![Dailymotion](https://a11ybadges.com/badge?logo=dailymotion) |
+------ | -------- | ----------|---------- | 
+Required? `width` |  optional | optional | optional
+Required? `height` |  optional | optional | optional
+Required? `fullscreen` | optional | optional | optional
+Required? `controls` |  optional | optional | optional
+Required? `autoplay` | optional | optional |optional
+Required? `cssname` | optional | optional | optional
+Required? `clip` |  yes | yes | yes
 ---------
 
 
