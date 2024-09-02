@@ -1,10 +1,15 @@
 {
   "name": "embedia-vue",
-  "version": "1.0.0-alpha.20",
+  "version": "1.0.0",
   "description": "A Vue component package to embed videos such as Facebook, Instagram, TikTok, YouTube/Shorts, Twitter/X, Vimeo, and Dailymotion.",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/demjhonsilver/embedia-vue.git"
+  },
+  "homepage": "https://demjhonsilver.github.io/embedia-vue-docs/",
   "scripts": {
     "build": "vite build",
     "types": "vue-tsc --declaration --emitDeclarationOnly",

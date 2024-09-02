@@ -52,7 +52,7 @@ Framework | Supported versions
 
 
 Major Changes:
- v1.0.0-alpha.20
+ v1.0.0
  - This library package offers a minimal syntax.
  - Lightweight size 
 
@@ -79,8 +79,8 @@ npm install embedia-vue
 ## Embed-video
 Attributes | ![Facebook](https://img.shields.io/badge/Facebook-%231877F2.svg?style=for-the-badge&logo=Facebook&logoColor=white) | ![Instagram](https://img.shields.io/badge/Instagram-%23E4405F.svg?style=for-the-badge&logo=Instagram&logoColor=white) | ![TikTok](https://img.shields.io/badge/TikTok-%23000000.svg?style=for-the-badge&logo=TikTok&logoColor=white)  | ![Twitter](https://img.shields.io/badge/Twitter-%231DA1F2.svg?style=for-the-badge&logo=Twitter&logoColor=white) ![X](https://img.shields.io/badge/X-%23000000.svg?style=for-the-badge&logo=X&logoColor=white) |
 ------ | -------- | ----------|---------- |------------
-Required? `width` | yes | |  | 
-Required? `height` | yes |  |  | 
+Required? `width` | optional | |  | 
+Required? `height` | optional |  |  | 
 Required? `fullscreen` |  optional |  |  |  
 Required? `controls` | |  |  |  
 Required? `autoplay` |  optional |  |  |   
