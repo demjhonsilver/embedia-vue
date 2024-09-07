@@ -101,7 +101,7 @@ const C = (e, t, o, a) => {
     return;
   }
   const a = e.autoplay ? 1 : 0, r = e.autoplay || e.muted ? 1 : 0, i = e.autoplay || e.loop ? 1 : 0, n = S(e.videoUrl), c = document.createElement("iframe");
-  c.src = `https://www.youtube.com/embed/${n}?autoplay=${a}&mute=${r}&loop=${i ? 1 : 0}&controls=${e.controls ? 1 : 0}`, c.width = e.width || 640, c.height = e.height || 360, c.frameborder = "0", e.fullscreen && c.setAttribute("allow", "fullscreen"), c.className = o, t.appendChild(c);
+  c.src = `https://www.youtube.com/embed/${n}?autoplay=${a}&mute=${r}&loop=${i ? 1 : 0}&controls=${e.controls ? 1 : 0}`, c.width = e.width || 640, c.height = e.height || 360, c.frameborder = "0", c.style.border = "none", e.fullscreen && c.setAttribute("allow", "fullscreen"), c.className = o, t.appendChild(c);
 }, R = (e) => {
   var a;
   const t = ((a = e.cssname) == null ? void 0 : a.trim()) || "";

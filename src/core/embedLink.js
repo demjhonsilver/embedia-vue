@@ -465,7 +465,7 @@ const embedInstagram = (video, container, cssname, videoCount) => {
     iframe.width = video.width || 640;
     iframe.height = video.height || 360;
     iframe.frameborder = "0";
-  
+    iframe.style.border = "none"; 
   
     if (video.fullscreen) {
       iframe.setAttribute("allow", "fullscreen");

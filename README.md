@@ -59,7 +59,11 @@ Major Changes:
 
 Minor Changes:
  v1.1.0
- - The embedded video for Twitter supports x.com
+ - The embedded video for Twitter supports x.com.
+
+Patch Changes:
+ v1.1.1
+ - The border line has been removed from the embedded YouTube clip.
 
 -------
 
