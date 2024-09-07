@@ -1,3 +1,4 @@
+// vite.config.js
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import path from 'path';
@@ -6,19 +7,20 @@ export default defineConfig({
   plugins: [vue()],
   build: {
     lib: {
-      entry: path.resolve(__dirname, 'src/index.ts'),
-      name: 'EmbediaVue',
-      fileName: (format) => `index.${format}.js`,
+      entry: path.resolve(__dirname, 'src/index.ts'),  // Entry file
+      name: 'EmbediaVue',  // Library name
+      // Define filenames for both formats
+      fileName: (format) => format === 'es' ? 'index.es.js' : 'index.js',  // ES module as index.es.js, CommonJS as index.js
+      formats: ['es', 'cjs']  // Output ES Module and CommonJS formats
     },
     rollupOptions: {
+      // Externalize Vue dependency
       external: ['vue'],
       output: {
         globals: {
-          vue: 'Vue',
-        },
-        format: 'es',
-      },
-    },
-    target: 'es2022',
-  },
+          vue: 'Vue'
+        }
+      }
+    }
+  }
 });

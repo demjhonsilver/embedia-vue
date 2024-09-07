@@ -1,7 +1,7 @@
 {
   "name": "embedia-vue",
-  "version": "1.0.0",
-  "description": "A Vue component package to embed videos such as Facebook, Instagram, TikTok, YouTube/Shorts, Twitter/X, Vimeo, and Dailymotion.",
+  "version": "1.1.0",
+  "description": "A vue component package to embed videos such as Facebook, Instagram, TikTok, YouTube/Shorts, Twitter/X, Vimeo, and Dailymotion.",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "types": "dist/index.d.ts",

@@ -6,9 +6,10 @@
 
 # Embedia Vue 
 
-[![npm version](https://img.shields.io/npm/v/embedia-vue.svg?logo=npm&style=flat-square&label=Latest&color=darkgreen)](https://www.npmjs.com/package/embedia-vue)
+[![npm version](https://img.shields.io/npm/v/embedia-vue.svg?logo=npm&style=flat-square&label=Latest&color=blue)](https://www.npmjs.com/package/embedia-vue)
+![Build Status](https://img.shields.io/badge/Build-Passing-brightgreen?style=flat-square)
 ![Package Size](https://img.shields.io/bundlephobia/minzip/embedia-vue?style=flat-square&color=yellow)
-![Downloads](https://img.shields.io/npm/dt/embedia-vue.svg?style=flat-square&label=Downloads&color=red)
+![Downloads](https://img.shields.io/npm/dt/embedia-vue.svg?style=flat-square&label=Downloads&color=orange)
 [![License](https://img.shields.io/npm/l/embedia-vue.svg?style=flat-square&label=License&color=green)](https://github.com/demjhonsilver/embedia-vue/blob/main/LICENSE.md)
 
 
@@ -56,6 +57,9 @@ Major Changes:
  - This library package offers a minimal syntax.
  - Lightweight size 
 
+Minor Changes:
+ v1.1.0
+ - The embedded video for Twitter supports x.com
 
 -------
 
@@ -64,6 +68,12 @@ Major Changes:
 
 - Easy to set-up and responsive.
 - Supports embedding one or more videos from platforms including Facebook, Instagram, TikTok, YouTube, YouTube Shorts, Twitter/X, Dailymotion, and Vimeo.
+
+___________
+
+
+[Click here: Demo](https://demjhonsilver.github.io/embedia-vue-docs)
+
 -------------
 ## Installation
 
@@ -82,7 +92,7 @@ Attributes | ![Facebook](https://img.shields.io/badge/Facebook-%231877F2.svg?sty
 Required? `width` | optional | |  | 
 Required? `height` | optional |  |  | 
 Required? `fullscreen` |  optional |  |  |  
-Required? `controls` | |  |  |  
+Required? `controls` | optional |  |  |  
 Required? `autoplay` |  optional |  |  |   
 Required? `cssname` |  optional  | optional | optional |  optional
 Required? `clip` |  yes | yes | yes | yes

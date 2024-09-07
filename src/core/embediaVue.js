@@ -46,7 +46,7 @@ const embed = (video) => {
       embedFacebook(video, container, cssname);
     } else if (video.videoUrl.includes("tiktok.com") || video.videoUrl.includes("tiktok")) {
       embedTiktok(video, container, cssname);
-    } else if (video.videoUrl.includes("twitter.com")) {
+    } else if (video.clip.includes("twitter.com") || video.clip.includes("x.com")) {
       embedTwitter(video, container, cssname);
     } else if (video.videoUrl.includes("vimeo.com")) {
       embedVimeo(video, container, cssname);
