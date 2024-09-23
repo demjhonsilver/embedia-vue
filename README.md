@@ -64,6 +64,8 @@ Minor Changes:
 Patch Changes:
  v1.1.1
  - The border line has been removed from the embedded YouTube clip.
+  v1.1.2
+ - Fixed the issue with embedding x.com.
 
 -------
 

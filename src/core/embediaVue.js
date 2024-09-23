@@ -1,5 +1,4 @@
-
-import { embedYouTube, embedFacebook, embedTiktok, embedTwitter, embedVimeo, embedDailymotion, embedInstagram } from './embedLink';
+import { embedYouTube, embedFacebook, embedTiktok, embedTwitter, embedX, embedVimeo, embedDailymotion, embedInstagram } from './embedLink';
 
 const embed = (video) => {
 
@@ -46,8 +45,10 @@ const embed = (video) => {
       embedFacebook(video, container, cssname);
     } else if (video.videoUrl.includes("tiktok.com") || video.videoUrl.includes("tiktok")) {
       embedTiktok(video, container, cssname);
-    } else if (video.clip.includes("twitter.com") || video.clip.includes("x.com")) {
+    } else if (video.videoUrl.includes("twitter.com")) {
       embedTwitter(video, container, cssname);
+    } else if (video.videoUrl.includes("x.com")) {
+      embedX(video, container, cssname);
     } else if (video.videoUrl.includes("vimeo.com")) {
       embedVimeo(video, container, cssname);
     } else if (video.videoUrl.includes("dailymotion.com") || video.videoUrl.includes("dailymotion")) {
