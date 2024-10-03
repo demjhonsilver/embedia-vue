@@ -40,8 +40,8 @@ const U = (e, t, o, s) => {
       height: r,
       controls: i,
       autoplay: n,
-      muted: !0,
-      // Set muted to true for autoplay
+      muted: !!n,
+      // Set muted to true if autoplay is true
       loop: c
     }).ready().then(() => {
     });
@@ -105,7 +105,7 @@ const U = (e, t, o, s) => {
 }, S = (e, t, o) => {
   const s = e.videoUrl, r = e.autoplay ? "autoplay=true" : "autoplay=false", i = r ? "muted=true" : "muted=false", n = e.width || 640, c = e.height || 360, a = document.createElement("iframe");
   a.setAttribute("src", `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(s)}&width=${n}&height=${c}&show_text=false&${r}&${i}`), a.setAttribute("width", n), a.setAttribute("height", c), a.setAttribute("frameborder", "0"), e.fullscreen && a.setAttribute("allowfullscreen", "true"), a.className = `video-${m} ${o} custom-facebook`, m++, t.appendChild(a);
-}, L = (e) => {
+}, N = (e) => {
   const t = e.match(/(?:shorts\/|v=)([a-zA-Z0-9_-]{11})/);
   if (t && t[1])
     return t[1];
@@ -113,14 +113,14 @@ const U = (e, t, o, s) => {
   if (o && o[2].length === 11)
     return o[2];
   throw new Error("Invalid YouTube video URL");
-}, N = (e, t, o) => {
+}, R = (e, t, o) => {
   if (!t) {
     console.error("Container element not found.");
     return;
   }
-  const s = e.autoplay ? 1 : 0, r = e.autoplay || e.muted ? 1 : 0, i = e.autoplay || e.loop ? 1 : 0, n = L(e.videoUrl), c = document.createElement("iframe");
+  const s = e.autoplay ? 1 : 0, r = e.autoplay || e.muted ? 1 : 0, i = e.autoplay || e.loop ? 1 : 0, n = N(e.videoUrl), c = document.createElement("iframe");
   c.src = `https://www.youtube.com/embed/${n}?autoplay=${s}&mute=${r}&loop=${i ? 1 : 0}&controls=${e.controls ? 1 : 0}`, c.width = e.width || 640, c.height = e.height || 360, c.frameborder = "0", c.style.border = "none", e.fullscreen && c.setAttribute("allow", "fullscreen"), c.className = o, t.appendChild(c);
-}, R = (e) => {
+}, L = (e) => {
   var s;
   const t = ((s = e.cssname) == null ? void 0 : s.trim()) || "";
   if (!t.match(/^[a-zA-Z_][\w-]*$/))
@@ -144,7 +144,7 @@ const U = (e, t, o, s) => {
   for (; o.firstChild; )
     o.removeChild(o.firstChild);
   if (e.videoUrl.includes("youtube.com") || e.videoUrl.includes("youtu.be"))
-    N(e, o, t);
+    R(e, o, t);
   else if (e.videoUrl.includes("facebook.com") || e.videoUrl.includes("fb.com"))
     S(e, o, t);
   else if (e.videoUrl.includes("tiktok.com") || e.videoUrl.includes("tiktok"))
@@ -202,7 +202,7 @@ const B = (e, t) => {
   setup(e) {
     const t = h("56.25%");
     p(() => {
-      R({
+      L({
         videoUrl: e.clip,
         width: e.width,
         height: e.height,

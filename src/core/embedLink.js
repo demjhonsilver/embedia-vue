@@ -144,8 +144,8 @@
       const emWidth = video.width || 640;
       const emHeight = video.height || 360;
       const controlsValue = video.controls;
-      const AutoplayValue = video.autoplay;
-      const LoopValue = video.loop;
+      const autoplayValue = video.autoplay;
+      const loopValue = video.loop;
     
       const videoId = extractVimeoVideoId(video.videoUrl);
     
@@ -168,9 +168,9 @@
           width: emWidth,
           height: emHeight,
           controls: controlsValue,
-          autoplay: AutoplayValue,
-          muted: true, // Set muted to true for autoplay
-          loop: LoopValue,
+          autoplay: autoplayValue,
+          muted: !!autoplayValue, // Set muted to true if autoplay is true
+          loop: loopValue,
         });
     
         vimeoPlayer.ready().then(() => {
@@ -187,7 +187,6 @@
         document.body.removeChild(script);
       };
     };
-    
     
     
     
