@@ -60,8 +60,13 @@ Major Changes:
 
 Minor Changes:
 
+ v1.2.0
+ - The embedded video for X and Instagram will be minimal.
+ - The embedded video for Vimeo has fixed the auto loop issue.
+
+
  v1.1.0
- - The embedded video for Twitter supports x.com.
+ - The embedded video for supports X.com.
 
 Patch Changes:
 
@@ -83,7 +88,7 @@ Patch Changes:
 ## Features
 
 - Easy to set-up and responsive.
-- Supports embedding one or more videos from platforms including Facebook, Instagram, TikTok, YouTube, YouTube Shorts, Twitter/X, Dailymotion, and Vimeo.
+- Supports embedding one or more videos from platforms including Facebook, Instagram, TikTok, YouTube, YouTube Shorts, X, Dailymotion, and Vimeo.
 
 ___________
 
@@ -103,13 +108,13 @@ npm install embedia-vue
 --------
 
 ## Embed-video
-Attributes | ![Facebook](https://img.shields.io/badge/Facebook-%231877F2.svg?style=for-the-badge&logo=Facebook&logoColor=white) | ![Instagram](https://img.shields.io/badge/Instagram-%23E4405F.svg?style=for-the-badge&logo=Instagram&logoColor=white) | ![TikTok](https://img.shields.io/badge/TikTok-%23000000.svg?style=for-the-badge&logo=TikTok&logoColor=white)  | ![Twitter](https://img.shields.io/badge/Twitter-%231DA1F2.svg?style=for-the-badge&logo=Twitter&logoColor=white) ![X](https://img.shields.io/badge/X-%23000000.svg?style=for-the-badge&logo=X&logoColor=white) |
+Attributes | ![Facebook](https://img.shields.io/badge/Facebook-%231877F2.svg?style=for-the-badge&logo=Facebook&logoColor=white) | ![Instagram](https://img.shields.io/badge/Instagram-%23E4405F.svg?style=for-the-badge&logo=Instagram&logoColor=white) | ![TikTok](https://img.shields.io/badge/TikTok-%23000000.svg?style=for-the-badge&logo=TikTok&logoColor=white)  | ![X](https://img.shields.io/badge/X-%23000000.svg?style=for-the-badge&logo=X&logoColor=white) |
 ------ | -------- | ----------|---------- |------------
-Required? `width` | optional | |  | 
-Required? `height` | optional |  |  | 
-Required? `fullscreen` |  optional |  |  |  
-Required? `controls` | optional |  |  |  
-Required? `autoplay` |  optional |  |  |   
+Required? `width` | yes | yes | no  | yes
+Required? `height` | yes | no | no | no
+Required? `fullscreen` |  optional | no | no |  no
+Required? `controls` |  |  |  |  
+Required? `autoplay` |   |  |  |   
 Required? `cssname` |  optional  | optional | optional |  optional
 Required? `clip` |  yes | yes | yes | yes
 ---------
@@ -119,8 +124,8 @@ Required? `clip` |  yes | yes | yes | yes
 
 Attributes | ![YouTube](https://img.shields.io/badge/YouTube-%23FF0000.svg?style=for-the-badge&logo=YouTube&logoColor=white) | ![Vimeo](https://a11ybadges.com/badge?logo=vimeo) | ![Dailymotion](https://a11ybadges.com/badge?logo=dailymotion) |
 ------ | -------- | ----------|---------- | 
-Required? `width` |  optional | optional | optional
-Required? `height` |  optional | optional | optional
+Required? `width` |  yes | yes | yes
+Required? `height` |  yes | yes | yes
 Required? `fullscreen` | optional | optional | optional
 Required? `controls` |  optional | optional | optional
 Required? `autoplay` | optional | optional |optional
@@ -235,7 +240,6 @@ import { EmbediaVue } from 'embedia-vue';
 
 <style scoped>
 .embed-clip {
-  float: right;
   border: 2px solid green;
 }
 </style>

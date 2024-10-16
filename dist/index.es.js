@@ -1,111 +1,137 @@
-import { ref as h, onMounted as p, watch as w, openBlock as f, createElementBlock as y, normalizeClass as b, normalizeStyle as g, pushScopeId as v, popScopeId as $, createElementVNode as E } from "vue";
-let m = 1;
-const U = (e, t, o, s) => {
-  const r = e.videoUrl, i = C(r);
-  if (!i)
+import { ref as p, onMounted as w, watch as f, openBlock as y, createElementBlock as b, normalizeClass as g, normalizeStyle as $, pushScopeId as x, popScopeId as E, createElementVNode as I } from "vue";
+let h = 1;
+const k = (e, t, o, a) => {
+  const n = e.videoUrl, s = Number(e.width) + 140, r = v(n);
+  if (!r)
     throw new Error("Invalid Instagram video URL");
-  let n = document.getElementById(t);
-  n || (n = document.createElement("div"), n.id = t, document.body.appendChild(n));
+  let i = document.getElementById(t);
+  i || (i = document.createElement("div"), i.id = t, document.body.appendChild(i));
   let c = document.querySelector(`.${o}`);
-  c || (c = document.createElement("div"), c.className = `video-${s} ${o}`, n.appendChild(c));
-  const a = document.createElement("blockquote");
-  a.setAttribute("class", "instagram-media"), a.setAttribute("data-instgrm-permalink", `https://www.instagram.com/p/${i}/`), a.setAttribute("data-instgrm-version", "13");
-  const l = document.createElement("a");
-  if (l.setAttribute("href", r), a.appendChild(l), c.appendChild(a), !document.getElementById("instagramEmbedScript")) {
-    const d = document.createElement("script");
-    d.setAttribute("async", ""), d.setAttribute("id", "instagramEmbedScript"), d.setAttribute("src", "//www.instagram.com/embed.js"), n.appendChild(d);
+  c || (c = document.createElement("div"), c.className = `video-${a} ${o}`, i.appendChild(c));
+  const l = document.createElement("blockquote");
+  l.className = "instagram-media", l.setAttribute("data-instgrm-permalink", `https://www.instagram.com/p/${r}/`), l.setAttribute("data-instgrm-version", "13"), l.style.width = `${e.width}px`, l.style.height = `${s}px`, l.style.maxWidth = "380px", l.style.maxheight = "520px";
+  const d = document.createElement("a");
+  if (d.href = n, l.appendChild(d), c.appendChild(l), !document.getElementById("instagramEmbedScript")) {
+    const m = document.createElement("script");
+    m.async = !0, m.id = "instagramEmbedScript", m.src = "//www.instagram.com/embed.js", i.appendChild(m);
   }
-}, C = (e) => {
+}, v = (e) => {
   const t = /\/([a-zA-Z0-9_-]+)\/?$/, o = e.match(t);
   return o ? o[1] : null;
-}, I = (e) => {
+}, C = (e) => {
   const t = e.match(/\/(?:video|hub)\/([^_]+)/) || e.match(/(?:^|\/)([a-z0-9]+)(?:_[\w-]*)?$/i);
   if (t && t[1])
     return t[1];
   throw new Error("Invalid Dailymotion video URL");
-}, _ = (e, t, o) => {
-  const s = e.videoUrl, r = I(s), i = e.autoplay ? "1" : "0", n = e.controls ? "1" : "0", c = e.fullscreen ? "1" : "0", a = document.createElement("iframe");
-  a.src = `https://www.dailymotion.com/embed/video/${r}?autoplay=${i}&controls=${n}&fullscreen=${c}`, a.width = e.width || 640, a.height = e.height || 360, a.frameBorder = "0", a.allowFullscreen = !0, a.className = o, t.appendChild(a);
-}, k = (e) => {
+}, U = (e, t, o) => {
+  const a = e.videoUrl, n = C(a), s = e.autoplay ? "1" : "0", r = e.controls ? "1" : "0", i = e.fullscreen ? "1" : "0", c = document.createElement("iframe");
+  c.src = `https://www.dailymotion.com/embed/video/${n}?autoplay=${s}&controls=${r}&fullscreen=${i}`, c.width = e.width || 640, c.height = e.height || 360, c.frameBorder = "0", c.allowFullscreen = !0, c.className = o, t.appendChild(c);
+}, _ = (e) => {
   const t = e.match(/\/(\d+)/);
   return t && t[1] ? t[1] : (console.error("Invalid Vimeo video URL"), "");
 }, T = (e, t, o) => {
-  const s = e.width || 640, r = e.height || 360, i = e.controls, n = e.autoplay, c = e.loop, a = k(e.videoUrl), l = document.createElement("div");
-  l.className = `video-${m} ${o}`, l.dataset.eWidth = s, l.dataset.eHeight = r, l.dataset.efullscreen = e.fullscreen, l.dataset.eVideoId = a, t.appendChild(l);
+  const a = e.width || 640, n = e.height || 360, s = e.controls, r = e.autoplay === "true", i = e.loop === "true", c = _(e.videoUrl), l = document.createElement("div");
+  l.className = `video-${h} ${o}`, l.dataset.eWidth = a, l.dataset.eHeight = n, l.dataset.efullscreen = e.fullscreen, l.dataset.eVideoId = c, t.appendChild(l);
   const d = document.createElement("script");
   return d.src = "https://player.vimeo.com/api/player.js", d.async = !0, d.onload = () => {
     new window.Vimeo.Player(l, {
-      id: a,
-      width: s,
-      height: r,
-      controls: i,
-      autoplay: n,
-      muted: !!n,
-      // Set muted to true if autoplay is true
-      loop: c
+      id: c,
+      width: a,
+      height: n,
+      controls: s,
+      autoplay: r,
+      muted: r,
+      loop: i
+      // Set loop based on boolean value
     }).ready().then(() => {
     });
   }, document.body.appendChild(d), () => {
     l && (l.innerHTML = ""), document.body.removeChild(d);
   };
-}, x = (e, t, o) => {
-  const s = (r) => {
-    const i = /\/status\/(\d+)/, n = r.match(i);
-    return n && n[1] ? n[1] : null;
-  };
-  try {
-    const r = e.videoUrl, i = s(r), n = document.createElement("div");
-    n.className = `video-${m} ${o}`, n.id = `tweet-${i}`;
-    const c = document.createElement("script");
-    c.src = "https://platform.twitter.com/widgets.js", c.charset = "utf-8", c.async = !0, c.addEventListener("load", () => {
-      window.twttr.widgets.createTweet(i, n);
-    }), t.appendChild(n), t.appendChild(c);
-  } catch (r) {
-    console.error("Error embedding Twitter content:", r);
-  }
 }, V = (e, t, o) => {
-  const s = (r) => {
-    const i = /\/status\/(\d+)/, n = r.match(i);
-    return n ? n[1] : null;
+  const a = (n) => {
+    const s = /\/(?:i\/)?status\/(\d+)/, r = n.match(s);
+    return r ? r[1] : null;
   };
   try {
-    const r = e.videoUrl, i = s(r);
-    if (!i)
-      throw new Error("Invalid video URL");
-    const n = document.createElement("div");
-    n.className = `video-${m} ${o}`, n.id = `tweet-${i}`;
-    const c = document.createElement("script");
-    c.src = "https://platform.twitter.com/widgets.js", c.charset = "utf-8", c.async = !0, c.addEventListener("load", () => {
-      window.twttr.widgets.createTweet(i, n);
-    }), t.appendChild(n), t.appendChild(c);
-  } catch (r) {
-    console.error("Error embedding Twitter content:", r);
+    if (!(t instanceof Node)) {
+      console.error("Container is not a valid DOM node.");
+      return;
+    }
+    const n = e.videoUrl, s = a(n);
+    if (!n || !s) {
+      console.error("Invalid video clip URL or tweet ID.");
+      return;
+    }
+    const r = document.createElement("blockquote");
+    r.className = `twitter-tweet ${o}`, r.setAttribute("data-media-max-width", e.width), r.setAttribute("data-media-max-height", e.height), r.innerHTML = `
+        <p lang="en" style="min-width: ${e.width}px; display: block;">
+          <a href="${n}" style="display: inline-block; min-width: ${e.width}px;">
+          </a>
+        </p>
+      `, t.appendChild(r);
+    const i = document.createElement("script");
+    i.src = "https://platform.twitter.com/widgets.js", i.charset = "utf-8", i.async = !0, i.addEventListener("load", () => {
+      window.twttr.widgets.load();
+    }), t.appendChild(i);
+  } catch (n) {
+    console.error("Error embedding Twitter content:", n);
   }
-}, u = /* @__PURE__ */ new Map(), A = (e, t, o) => {
-  const s = e.videoUrl;
-  if (u.has(s) || u.has(s))
+}, A = (e, t, o) => {
+  const a = (n) => {
+    n = n.replace("x.com", "twitter.com");
+    const s = /\/(?:i\/)?status\/(\d+)/, r = n.match(s);
+    return r ? r[1] : null;
+  };
+  try {
+    if (!(t instanceof Node)) {
+      console.error("Container is not a valid DOM node.");
+      return;
+    }
+    const n = e.videoUrl, s = a(n);
+    if (!n || !s) {
+      console.error("Invalid video clip URL or tweet ID.");
+      return;
+    }
+    const r = document.createElement("blockquote");
+    r.className = `twitter-tweet ${o}`, r.setAttribute("data-media-max-width", e.width), r.setAttribute("data-media-max-height", e.height), r.innerHTML = `
+        <p lang="en" style="min-width: ${e.width}px; display: block;">
+          <a href="https://twitter.com/i/status/${s}" style="display: inline-block; min-width: ${e.width}px;">
+          </a>
+        </p>
+      `, t.appendChild(r);
+    const i = document.createElement("script");
+    i.src = "https://platform.twitter.com/widgets.js", i.charset = "utf-8", i.async = !0, i.addEventListener("load", () => {
+      window.twttr.widgets.load();
+    }), t.appendChild(i);
+  } catch (n) {
+    console.error("Error embedding Twitter content:", n);
+  }
+}, u = /* @__PURE__ */ new Map(), S = (e, t, o) => {
+  const a = e.videoUrl;
+  if (u.has(a) || u.has(a))
     return;
-  u.set(s, !0);
-  const r = e.width || "100%", i = e.height || "100%", n = new XMLHttpRequest();
-  n.open("GET", `https://www.tiktok.com/oembed?url=${encodeURIComponent(s)}`, !0), n.onload = function() {
-    if (n.status >= 200 && n.status < 300) {
-      const c = JSON.parse(n.responseText);
-      c.html && (c.html = c.html.replace(/<script[^>]*>.*<\/script>/gi, ""));
-      const a = document.createElement("div"), l = Date.now();
-      if (a.className = `video-${l} ${o}`, a.style.width = r, a.style.height = i, a.innerHTML = c.html, !document.querySelector('script[src="https://www.tiktok.com/embed.js"]')) {
+  u.set(a, !0);
+  const n = e.width || "100%", s = e.height || "100%", r = new XMLHttpRequest();
+  r.open("GET", `https://www.tiktok.com/oembed?url=${encodeURIComponent(a)}`, !0), r.onload = function() {
+    if (r.status >= 200 && r.status < 300) {
+      const i = JSON.parse(r.responseText);
+      i.html && (i.html = i.html.replace(/<script[^>]*>.*<\/script>/gi, ""));
+      const c = document.createElement("div"), l = Date.now();
+      if (c.className = `video-${l} ${o}`, c.style.width = n, c.style.height = s, c.innerHTML = i.html, !document.querySelector('script[src="https://www.tiktok.com/embed.js"]')) {
         const d = document.createElement("script");
         d.src = "https://www.tiktok.com/embed.js", document.body.appendChild(d);
       }
-      t ? t.appendChild(a) : document.body && document.body.appendChild(a);
+      t ? t.appendChild(c) : document.body && document.body.appendChild(c);
     } else
-      console.error("Failed to fetch TikTok oEmbed data: " + n.statusText);
-  }, n.onerror = function() {
+      console.error("Failed to fetch TikTok oEmbed data: " + r.statusText);
+  }, r.onerror = function() {
     console.error("An error occurred while embedding TikTok video.");
-  }, n.send();
-}, S = (e, t, o) => {
-  const s = e.videoUrl, r = e.autoplay ? "autoplay=true" : "autoplay=false", i = r ? "muted=true" : "muted=false", n = e.width || 640, c = e.height || 360, a = document.createElement("iframe");
-  a.setAttribute("src", `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(s)}&width=${n}&height=${c}&show_text=false&${r}&${i}`), a.setAttribute("width", n), a.setAttribute("height", c), a.setAttribute("frameborder", "0"), e.fullscreen && a.setAttribute("allowfullscreen", "true"), a.className = `video-${m} ${o} custom-facebook`, m++, t.appendChild(a);
-}, N = (e) => {
+  }, r.send();
+}, N = (e, t, o) => {
+  const a = e.videoUrl, n = e.autoplay ? "autoplay=true" : "autoplay=false", s = n ? "muted=true" : "muted=false", r = e.width || 640, i = e.height || 360, c = document.createElement("iframe");
+  c.setAttribute("src", `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(a)}&width=${r}&height=${i}&show_text=false&${n}&${s}`), c.setAttribute("width", r), c.setAttribute("height", i), c.setAttribute("frameborder", "0"), e.fullscreen && c.setAttribute("allowfullscreen", "true"), c.className = `video-${h} ${o} custom-facebook`, h++, t.appendChild(c);
+}, L = (e) => {
   const t = e.match(/(?:shorts\/|v=)([a-zA-Z0-9_-]{11})/);
   if (t && t[1])
     return t[1];
@@ -113,21 +139,21 @@ const U = (e, t, o, s) => {
   if (o && o[2].length === 11)
     return o[2];
   throw new Error("Invalid YouTube video URL");
-}, R = (e, t, o) => {
+}, M = (e, t, o) => {
   if (!t) {
     console.error("Container element not found.");
     return;
   }
-  const s = e.autoplay ? 1 : 0, r = e.autoplay || e.muted ? 1 : 0, i = e.autoplay || e.loop ? 1 : 0, n = N(e.videoUrl), c = document.createElement("iframe");
-  c.src = `https://www.youtube.com/embed/${n}?autoplay=${s}&mute=${r}&loop=${i ? 1 : 0}&controls=${e.controls ? 1 : 0}`, c.width = e.width || 640, c.height = e.height || 360, c.frameborder = "0", c.style.border = "none", e.fullscreen && c.setAttribute("allow", "fullscreen"), c.className = o, t.appendChild(c);
-}, L = (e) => {
-  var s;
-  const t = ((s = e.cssname) == null ? void 0 : s.trim()) || "";
+  const a = e.autoplay ? 1 : 0, n = e.autoplay || e.muted ? 1 : 0, s = e.autoplay || e.loop ? 1 : 0, r = L(e.videoUrl), i = document.createElement("iframe");
+  i.src = `https://www.youtube.com/embed/${r}?autoplay=${a}&mute=${n}&loop=${s ? 1 : 0}&controls=${e.controls ? 1 : 0}`, i.width = e.width || 640, i.height = e.height || 360, i.frameborder = "0", i.style.border = "none", e.fullscreen && i.setAttribute("allow", "fullscreen"), i.className = o, t.appendChild(i);
+}, R = (e) => {
+  var a;
+  const t = ((a = e.cssname) == null ? void 0 : a.trim()) || "";
   if (!t.match(/^[a-zA-Z_][\w-]*$/))
     throw console.error("Invalid class name:", t), new Error("Invalid class name");
   if (!document.querySelector(`#default-style-${t}`)) {
-    const r = document.createElement("style");
-    r.id = `default-style-${t}`, r.textContent = `
+    const n = document.createElement("style");
+    n.id = `default-style-${t}`, n.textContent = `
             .${t} {
               display: flex;
               justify-content: center;
@@ -136,7 +162,7 @@ const U = (e, t, o, s) => {
               min-height: 144px;
               margin: auto;
             }
-          `, document.head.appendChild(r);
+          `, document.head.appendChild(n);
   }
   const o = document.querySelector(`.${t}`);
   if (!o)
@@ -144,30 +170,30 @@ const U = (e, t, o, s) => {
   for (; o.firstChild; )
     o.removeChild(o.firstChild);
   if (e.videoUrl.includes("youtube.com") || e.videoUrl.includes("youtu.be"))
-    R(e, o, t);
+    M(e, o, t);
   else if (e.videoUrl.includes("facebook.com") || e.videoUrl.includes("fb.com"))
-    S(e, o, t);
+    N(e, o, t);
   else if (e.videoUrl.includes("tiktok.com") || e.videoUrl.includes("tiktok"))
-    A(e, o, t);
+    S(e, o, t);
   else if (e.videoUrl.includes("twitter.com"))
-    x(e, o, t);
-  else if (e.videoUrl.includes("x.com"))
     V(e, o, t);
+  else if (e.videoUrl.includes("x.com"))
+    A(e, o, t);
   else if (e.videoUrl.includes("vimeo.com"))
     T(e, o, t);
   else if (e.videoUrl.includes("dailymotion.com") || e.videoUrl.includes("dailymotion"))
-    _(e, o, t);
-  else if (e.videoUrl.includes("instagram.com") || e.videoUrl.includes("instagram"))
     U(e, o, t);
+  else if (e.videoUrl.includes("instagram.com") || e.videoUrl.includes("instagram"))
+    k(e, o, t);
   else
     throw new Error("Invalid video URL");
 };
-const B = (e, t) => {
+const q = (e, t) => {
   const o = e.__vccOpts || e;
-  for (const [s, r] of t)
-    o[s] = r;
+  for (const [a, n] of t)
+    o[a] = n;
   return o;
-}, M = {
+}, D = {
   name: "EmbediaVue",
   props: {
     clip: {
@@ -200,9 +226,9 @@ const B = (e, t) => {
     }
   },
   setup(e) {
-    const t = h("56.25%");
-    p(() => {
-      L({
+    const t = p("56.25%");
+    w(() => {
+      R({
         videoUrl: e.clip,
         width: e.width,
         height: e.height,
@@ -211,26 +237,26 @@ const B = (e, t) => {
         controls: e.controls,
         cssname: e.cssname
       }), o(e.width, e.height);
-    }), w(() => [e.width, e.height], ([s, r]) => {
-      o(s, r);
+    }), f(() => [e.width, e.height], ([a, n]) => {
+      o(a, n);
     }, { immediate: !0 });
-    function o(s, r) {
-      s && r ? t.value = `${r / s * 100}%` : t.value = "56.25%";
+    function o(a, n) {
+      a && n ? t.value = `${n / a * 100}%` : t.value = "56.25%";
     }
     return {
       aspectRatio: t
     };
   }
-}, q = (e) => (v("data-v-d26b150f"), e = e(), $(), e), j = /* @__PURE__ */ q(() => /* @__PURE__ */ E("div", { class: "video-content" }, null, -1)), z = [
-  j
+}, B = (e) => (x("data-v-d26b150f"), e = e(), E(), e), H = /* @__PURE__ */ B(() => /* @__PURE__ */ I("div", { class: "video-content" }, null, -1)), j = [
+  H
 ];
-function D(e, t, o, s, r, i) {
-  return f(), y("div", {
-    class: b([o.cssname, "responsive-container"]),
-    style: g({ "--aspect-ratio": s.aspectRatio, width: "auto", maxWidth: "100%" })
-  }, z, 6);
+function W(e, t, o, a, n, s) {
+  return y(), b("div", {
+    class: g([o.cssname, "responsive-container"]),
+    style: $({ "--aspect-ratio": a.aspectRatio, width: "auto", maxWidth: "100%" })
+  }, j, 6);
 }
-const F = /* @__PURE__ */ B(M, [["render", D], ["__scopeId", "data-v-d26b150f"]]);
+const O = /* @__PURE__ */ q(D, [["render", W], ["__scopeId", "data-v-d26b150f"]]);
 export {
-  F as EmbediaVue
+  O as EmbediaVue
 };

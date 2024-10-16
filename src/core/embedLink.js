@@ -25,68 +25,71 @@
   SOFTWARE. */
 
   
+  
   let videoCount = 1; // Initialize videoCount
 
+  const embedInstagram = (video, containerId, cssClassName, videoCount) => {
+    const clipUrl = video.videoUrl;
+    const hc = Number(video.width) + 140;
+    // Extract the video ID from the URL
+    const videoId = extractInstagramVideoId(clipUrl);
+    if (!videoId) {
+      throw new Error('Invalid Instagram video URL');
+    }
+  
+    // Ensure the container element exists
+    let embedContainer = document.getElementById(containerId);
+    if (!embedContainer) {
+      embedContainer = document.createElement('div');
+      embedContainer.id = containerId;
+      document.body.appendChild(embedContainer);
+    }
+  
+    // Create or find the playerDiv for the Instagram video
+    let playerDiv = document.querySelector(`.${cssClassName}`);
+    if (!playerDiv) {
+      playerDiv = document.createElement('div');
+      playerDiv.className = `video-${videoCount} ${cssClassName}`;
+      embedContainer.appendChild(playerDiv);
+    }
+  
+    // Create the blockquote element for Instagram embed
+    const blockquote = document.createElement('blockquote');
+    blockquote.className = 'instagram-media';
+    blockquote.setAttribute('data-instgrm-permalink', `https://www.instagram.com/p/${videoId}/`);
+    blockquote.setAttribute('data-instgrm-version', '13');
+    blockquote.style.width = `${video.width}px`;
+    blockquote.style.height = `${hc}px`;
+    blockquote.style.maxWidth = '380px';
+    blockquote.style.maxheight = '520px';
 
-  const embedInstagram = (video, container, cssname, videoCount) => {
-      const videoUrl = video.videoUrl;
-    
-      // Extract the video ID from the URL
-      const videoId = extractInstagramVideoId(videoUrl);
-      if (!videoId) {
-        throw new Error('Invalid Instagram video URL');
-      }
-    
-      // Check if the container element exists, create it if it doesn't
-      let embedContainer = document.getElementById(container);
-      if (!embedContainer) {
-        embedContainer = document.createElement('div');
-        embedContainer.id = container;
-        document.body.appendChild(embedContainer);
-      }
-    
-      // Check if the playerDiv for the Instagram video already exists
-      let playerDiv = document.querySelector(`.${cssname}`);
-      if (!playerDiv) {
-        // Create the playerDiv containing the Instagram video with the specified cssname
-        playerDiv = document.createElement("div");
-        playerDiv.className = `video-${videoCount} ${cssname}`;
-    
-        // Append the playerDiv to the embedContainer
-        embedContainer.appendChild(playerDiv);
-      }
-    
-      // Create the blockquote element for Instagram embed
-      const blockquote = document.createElement('blockquote');
-      blockquote.setAttribute('class', 'instagram-media');
-      blockquote.setAttribute('data-instgrm-permalink', `https://www.instagram.com/p/${videoId}/`);
-      blockquote.setAttribute('data-instgrm-version', '13');
-    
-      const anchor = document.createElement('a');
-      anchor.setAttribute('href', videoUrl);
-      blockquote.appendChild(anchor);
-    
-      // Append the blockquote to the playerDiv
-      playerDiv.appendChild(blockquote);
-    
-      // Check if embed script already exists, if not, append it to the embedContainer
-      if (!document.getElementById('instagramEmbedScript')) {
-        const script = document.createElement('script');
-        script.setAttribute('async', '');
-        script.setAttribute('id', 'instagramEmbedScript');
-        script.setAttribute('src', '//www.instagram.com/embed.js');
-        embedContainer.appendChild(script);
-      }
-    };
-    
-    
-    // Regular expression to extract Instagram video ID from URL
-    const extractInstagramVideoId = (url) => {
-      const regex = /\/([a-zA-Z0-9_-]+)\/?$/;
-      const match = url.match(regex);
-      return match ? match[1] : null;
-    };
-    
+    const anchor = document.createElement('a');
+    anchor.href = clipUrl;
+    blockquote.appendChild(anchor);
+  
+    // Append the blockquote to the playerDiv
+    playerDiv.appendChild(blockquote);
+  
+    // Append the Instagram embed script if it doesn't exist
+    if (!document.getElementById('instagramEmbedScript')) {
+      const script = document.createElement('script');
+      script.async = true;
+      script.id = 'instagramEmbedScript';
+      script.src = '//www.instagram.com/embed.js';
+      embedContainer.appendChild(script);
+    }
+  };
+  
+  // Regular expression to extract Instagram video ID from URL
+  const extractInstagramVideoId = (url) => {
+    const regex = /\/([a-zA-Z0-9_-]+)\/?$/;
+    const match = url.match(regex);
+    return match ? match[1] : null;
+  };
+  
+
+
+
     
     const extractDailymotionVideoId = (url) => {
       const videoIdMatch = url.match(/\/(?:video|hub)\/([^_]+)/) || url.match(/(?:^|\/)([a-z0-9]+)(?:_[\w-]*)?$/i);
@@ -124,161 +127,188 @@
     
     
     
-    
-    
-    
-    
-    // Function to extract Vimeo video ID from a URL
-    const extractVimeoVideoId = (url) => {
-      const videoIdMatch = url.match(/\/(\d+)/);
-      if (videoIdMatch && videoIdMatch[1]) {
-        return videoIdMatch[1];
-      } else {
-        console.error("Invalid Vimeo video URL");
-        return "";
+        // Function to extract Vimeo video ID from a URL
+const extractVimeoVideoId = (url) => {
+  const videoIdMatch = url.match(/\/(\d+)/);
+  if (videoIdMatch && videoIdMatch[1]) {
+    return videoIdMatch[1];
+  } else {
+    console.error("Invalid Vimeo video URL");
+    return "";
+  }
+};
+  
+  const embedVimeo = (video, container, cssname) => {
+    const emWidth = video.width || 640;
+    const emHeight = video.height || 360;
+    const controlsValue = video.controls;
+    const autoplayValue = video.autoplay === "true"; // Convert to boolean
+    const loopValue = video.loop === "true"; // Convert to boolean
+  
+ 
+    const videoId = extractVimeoVideoId(video.videoUrl);
+  
+    const playerDiv = document.createElement("div");
+    playerDiv.className = `video-${videoCount} ${cssname}`;
+    playerDiv.dataset.eWidth = emWidth;
+    playerDiv.dataset.eHeight = emHeight;
+    playerDiv.dataset.efullscreen = video.fullscreen;
+    playerDiv.dataset.eVideoId = videoId;
+  
+    container.appendChild(playerDiv);
+  
+    const script = document.createElement("script");
+    script.src = "https://player.vimeo.com/api/player.js";
+    script.async = true;
+  
+    script.onload = () => {
+      const vimeoPlayer = new window.Vimeo.Player(playerDiv, {
+        id: videoId,
+        width: emWidth,
+        height: emHeight,
+        controls: controlsValue,
+        autoplay: autoplayValue,
+        muted: autoplayValue,
+        loop: loopValue, // Set loop based on boolean value
+      });
+  
+      vimeoPlayer.ready().then(() => {
+        // Additional player methods can be used here if needed
+      });
+    };
+  
+    document.body.appendChild(script);
+  
+    return () => {
+      if (playerDiv) {
+        playerDiv.innerHTML = "";
       }
+      document.body.removeChild(script);
     };
+  };
     
     
-    const embedVimeo = (video, container, cssname) => {
-      const emWidth = video.width || 640;
-      const emHeight = video.height || 360;
-      const controlsValue = video.controls;
-      const autoplayValue = video.autoplay;
-      const loopValue = video.loop;
-    
-      const videoId = extractVimeoVideoId(video.videoUrl);
-    
-      const playerDiv = document.createElement("div");
-      playerDiv.className = `video-${videoCount} ${cssname}`;
-      playerDiv.dataset.eWidth = emWidth;
-      playerDiv.dataset.eHeight = emHeight;
-      playerDiv.dataset.efullscreen = video.fullscreen;
-      playerDiv.dataset.eVideoId = videoId;
-    
-      container.appendChild(playerDiv);
-    
-      const script = document.createElement("script");
-      script.src = "https://player.vimeo.com/api/player.js";
-      script.async = true;
-    
-      script.onload = () => {
-        const vimeoPlayer = new window.Vimeo.Player(playerDiv, {
-          id: videoId,
-          width: emWidth,
-          height: emHeight,
-          controls: controlsValue,
-          autoplay: autoplayValue,
-          muted: !!autoplayValue, // Set muted to true if autoplay is true
-          loop: loopValue,
-        });
-    
-        vimeoPlayer.ready().then(() => {
-          // You can use player methods here as needed
-        });
-      };
-    
-      document.body.appendChild(script);
-    
-      return () => {
-        if (playerDiv) {
-          playerDiv.innerHTML = "";
-        }
-        document.body.removeChild(script);
-      };
+  const embedTwitter = (video, container, cssname) => {
+    const extractTwitterTweetId = (url) => {
+      const regex = /\/(?:i\/)?status\/(\d+)/; // Extracts tweet ID
+      const match = url.match(regex);
+      return match ? match[1] : null; // Return tweet ID or null
     };
-    
-    
-    
-    
-    const embedTwitter = (video, container, cssname) => {
-    
-      const extractTwitterTweetId = (url) => {
-        const regex = /\/status\/(\d+)/;
-        const match = url.match(regex);
-    
-        if (match && match[1]) {
-          return match[1];
-        } else {
-          return null; // No match found
-        }
-      };
-    
-      try {
-        const videoUrl = video.videoUrl;
-        const tweetId = extractTwitterTweetId(videoUrl);
-    
-        // Create a div to hold the embedded tweet
-        const tweetContainer = document.createElement("div");
-    
-        // Apply the cssname to the tweetContainer
-        tweetContainer.className = `video-${videoCount} ${cssname}`;
-    
-        // Set the ID for the tweet container
-        tweetContainer.id = `tweet-${tweetId}`;
-    
-        // Add the Twitter widget script to the page and wait for it to load
-        const twitterWidgetScript = document.createElement("script");
-        twitterWidgetScript.src = "https://platform.twitter.com/widgets.js";
-        twitterWidgetScript.charset = "utf-8";
-        twitterWidgetScript.async = true;
-    
-        // Attach a load event listener to the script
-        twitterWidgetScript.addEventListener("load", () => {
-          // The Twitter widget script has loaded, and the tweet is now embedded.
-          // You can perform any additional actions here if needed.
-          window.twttr.widgets.createTweet(tweetId, tweetContainer);
-        });
-    
-        // Append the tweet container to the provided container
-        container.appendChild(tweetContainer);
-        container.appendChild(twitterWidgetScript);
-    
-      } catch (error) {
-        console.error("Error embedding Twitter content:", error);
+  
+    try {
+      // Validate container
+      if (!(container instanceof Node)) {
+        console.error("Container is not a valid DOM node.");
+        return;
       }
-    };
-    
-    
-
-    const embedX = (video, container, cssname) => {
-      const extractTwitterTweetId = (url) => {
-        const regex = /\/status\/(\d+)/;
-        const match = url.match(regex);
-        return match ? match[1] : null; // Return tweet ID or null
-      };
-    
-      try {
-        const videoUrl = video.videoUrl;
-        const tweetId = extractTwitterTweetId(videoUrl);
-    
-        if (!tweetId) {
-          throw new Error("Invalid video URL"); // Throw error if tweet ID not found
-        }
-    
-        const tweetContainer = document.createElement("div");
-        tweetContainer.className = `video-${videoCount} ${cssname}`;
-        tweetContainer.id = `tweet-${tweetId}`;
-    
-        const twitterWidgetScript = document.createElement("script");
-        twitterWidgetScript.src = "https://platform.twitter.com/widgets.js";
-        twitterWidgetScript.charset = "utf-8";
-        twitterWidgetScript.async = true;
-    
-        twitterWidgetScript.addEventListener("load", () => {
-          window.twttr.widgets.createTweet(tweetId, tweetContainer);
-        });
-    
-        container.appendChild(tweetContainer);
-        container.appendChild(twitterWidgetScript);
-      } catch (error) {
-        console.error("Error embedding Twitter content:", error);
+  
+      const clip = video.videoUrl; // Get the clip URL from the video object
+      const tweetId = extractTwitterTweetId(clip); // Extract tweet ID
+  
+      // Validate URL and Tweet ID
+      if (!clip || !tweetId) {
+        console.error("Invalid video clip URL or tweet ID.");
+        return;
       }
-    };
-    
-    
+  
+      // Create the blockquote element
+      const tweetContainer = document.createElement("blockquote");
+      tweetContainer.className = `twitter-tweet ${cssname}`;
+      tweetContainer.setAttribute("data-media-max-width", video.width);
+      tweetContainer.setAttribute("data-media-max-height", video.height);
+  
+      // Construct dynamic HTML based on the clip URL
+      tweetContainer.innerHTML = `
+        <p lang="en" style="min-width: ${video.width}px; display: block;">
+          <a href="${clip}" style="display: inline-block; min-width: ${video.width}px;">
+          </a>
+        </p>
+      `;
+  
+      // Append the tweet container to the provided container
+      container.appendChild(tweetContainer);
+  
+      // Add the Twitter widget script to the page
+      const twitterWidgetScript = document.createElement("script");
+      twitterWidgetScript.src = "https://platform.twitter.com/widgets.js";
+      twitterWidgetScript.charset = "utf-8";
+      twitterWidgetScript.async = true;
+  
+      // Attach a load event listener to the script
+      twitterWidgetScript.addEventListener("load", () => {
+        window.twttr.widgets.load(); // Load the widget
+      });
+  
+      // Append the script after the tweet container
+      container.appendChild(twitterWidgetScript);
+  
+    } catch (error) {
+      console.error("Error embedding Twitter content:", error);
+    }
+  };
 
 
+
+  
+
+
+  
+
+
+
+
+  const embedX = (video, container, cssname) => {
+    const extractTwitterTweetId = (url) => {
+      url = url.replace("x.com", "twitter.com");
+      const regex = /\/(?:i\/)?status\/(\d+)/;
+      const match = url.match(regex);
+      return match ? match[1] : null;
+    };
+  
+    try {
+      if (!(container instanceof Node)) {
+        console.error("Container is not a valid DOM node.");
+        return;
+      }
+  
+      const clip = video.videoUrl;
+      const tweetId = extractTwitterTweetId(clip);
+  
+      if (!clip || !tweetId) {
+        console.error("Invalid video clip URL or tweet ID.");
+        return;
+      }
+  
+      const tweetContainer = document.createElement("blockquote");
+      tweetContainer.className = `twitter-tweet ${cssname}`;
+      tweetContainer.setAttribute("data-media-max-width", video.width);
+      tweetContainer.setAttribute("data-media-max-height", video.height);
+  
+      // Construct the <a> tag with the correct URL
+      tweetContainer.innerHTML = `
+        <p lang="en" style="min-width: ${video.width}px; display: block;">
+          <a href="https://twitter.com/i/status/${tweetId}" style="display: inline-block; min-width: ${video.width}px;">
+          </a>
+        </p>
+      `;
+  
+      container.appendChild(tweetContainer);
+  
+      const twitterWidgetScript = document.createElement("script");
+      twitterWidgetScript.src = "https://platform.twitter.com/widgets.js";
+      twitterWidgetScript.charset = "utf-8";
+      twitterWidgetScript.async = true;
+  
+      twitterWidgetScript.addEventListener("load", () => {
+        window.twttr.widgets.load();
+      });
+  
+      container.appendChild(twitterWidgetScript);
+  
+    } catch (error) {
+      console.error("Error embedding Twitter content:", error);
+    }
+  };
     
     // Map to track embedded TikTok videos
     const embeddedTikTokVideos = new Map();
