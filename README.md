@@ -71,6 +71,9 @@ Minor Changes:
 Patch Changes:
 
 
+ v1.2.3
+ - Fixed the issue with embedding x.com concerning the width.
+
  v1.2.2
  - Fixed the issue with embedding x.com, which restores the embedded post with a card rather than just a video.
 

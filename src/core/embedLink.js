@@ -189,45 +189,32 @@ const extractVimeoVideoId = (url) => {
     
     
   const embedTwitter = (video, container, cssname) => {
+    
     const extractTwitterTweetId = (url) => {
-      const regex = /\/(?:i\/)?status\/(\d+)/; // Extracts tweet ID
+      const regex = /\/status\/(\d+)/;
       const match = url.match(regex);
-      return match ? match[1] : null; // Return tweet ID or null
+  
+      if (match && match[1]) {
+        return match[1];
+      } else {
+        return null; // No match found
+      }
     };
   
     try {
-      // Validate container
-      if (!(container instanceof Node)) {
-        console.error("Container is not a valid DOM node.");
-        return;
-      }
+      const videoUrl = video.videoUrl;
+      const tweetId = extractTwitterTweetId(videoUrl);
   
-      const clip = video.videoUrl; // Get the clip URL from the video object
-      const tweetId = extractTwitterTweetId(clip); // Extract tweet ID
+      // Create a div to hold the embedded tweet
+      const tweetContainer = document.createElement("div");
   
-      // Validate URL and Tweet ID
-      if (!clip || !tweetId) {
-        console.error("Invalid video clip URL or tweet ID.");
-        return;
-      }
+      // Apply the cssname to the tweetContainer
+      tweetContainer.className = `video-${videoCount} ${cssname}`;
   
-      // Create the blockquote element
-      const tweetContainer = document.createElement("blockquote");
-      tweetContainer.className = `twitter-tweet ${cssname}`;
-   
+      // Set the ID for the tweet container
+      tweetContainer.id = `tweet-${tweetId}`;
   
-      // Construct dynamic HTML based on the clip URL
-      tweetContainer.innerHTML = `
-        <p lang="en" style="min-width: ${video.width}px; display: block;">
-          <a href="${clip}" style="display: inline-block; min-width: ${video.width}px;">
-          </a>
-        </p>
-      `;
-  
-      // Append the tweet container to the provided container
-      container.appendChild(tweetContainer);
-  
-      // Add the Twitter widget script to the page
+      // Add the Twitter widget script to the page and wait for it to load
       const twitterWidgetScript = document.createElement("script");
       twitterWidgetScript.src = "https://platform.twitter.com/widgets.js";
       twitterWidgetScript.charset = "utf-8";
@@ -235,62 +222,40 @@ const extractVimeoVideoId = (url) => {
   
       // Attach a load event listener to the script
       twitterWidgetScript.addEventListener("load", () => {
-        window.twttr.widgets.load(); // Load the widget
+        // The Twitter widget script has loaded, and the tweet is now embedded.
+        // You can perform any additional actions here if needed.
+        window.twttr.widgets.createTweet(tweetId, tweetContainer);
       });
   
-      // Append the script after the tweet container
+      // Append the tweet container to the provided container
+      container.appendChild(tweetContainer);
       container.appendChild(twitterWidgetScript);
   
     } catch (error) {
       console.error("Error embedding Twitter content:", error);
     }
   };
-
-
-
   
-
-
   
-
-
-
 
   const embedX = (video, container, cssname) => {
     const extractTwitterTweetId = (url) => {
-      url = url.replace("x.com", "twitter.com");
-      const regex = /\/(?:i\/)?status\/(\d+)/;
+      const regex = /\/status\/(\d+)/;
       const match = url.match(regex);
-      return match ? match[1] : null;
+      return match ? match[1] : null; // Return tweet ID or null
     };
   
     try {
-      if (!(container instanceof Node)) {
-        console.error("Container is not a valid DOM node.");
-        return;
+      const videoUrl = video.videoUrl;
+      const tweetId = extractTwitterTweetId(videoUrl);
+  
+      if (!tweetId) {
+        throw new Error("Invalid video URL"); // Throw error if tweet ID not found
       }
   
-      const clip = video.videoUrl;
-      const tweetId = extractTwitterTweetId(clip);
-  
-      if (!clip || !tweetId) {
-        console.error("Invalid video clip URL or tweet ID.");
-        return;
-      }
-  
-      const tweetContainer = document.createElement("blockquote");
-      tweetContainer.className = `twitter-tweet ${cssname}`;
- 
-  
-      // Construct the <a> tag with the correct URL
-      tweetContainer.innerHTML = `
-        <p lang="en" style="min-width: ${video.width}px; display: block;">
-          <a href="https://twitter.com/i/status/${tweetId}" style="display: inline-block; min-width: ${video.width}px;">
-          </a>
-        </p>
-      `;
-  
-      container.appendChild(tweetContainer);
+      const tweetContainer = document.createElement("div");
+      tweetContainer.className = `video-${videoCount} ${cssname}`;
+      tweetContainer.id = `tweet-${tweetId}`;
   
       const twitterWidgetScript = document.createElement("script");
       twitterWidgetScript.src = "https://platform.twitter.com/widgets.js";
@@ -298,16 +263,25 @@ const extractVimeoVideoId = (url) => {
       twitterWidgetScript.async = true;
   
       twitterWidgetScript.addEventListener("load", () => {
-        window.twttr.widgets.load();
+        window.twttr.widgets.createTweet(tweetId, tweetContainer);
       });
   
+      container.appendChild(tweetContainer);
       container.appendChild(twitterWidgetScript);
-  
     } catch (error) {
       console.error("Error embedding Twitter content:", error);
     }
   };
-    
+  
+  
+
+
+
+  
+
+
+
+
     // Map to track embedded TikTok videos
     const embeddedTikTokVideos = new Map();
     
