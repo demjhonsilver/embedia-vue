@@ -214,8 +214,7 @@ const extractVimeoVideoId = (url) => {
       // Create the blockquote element
       const tweetContainer = document.createElement("blockquote");
       tweetContainer.className = `twitter-tweet ${cssname}`;
-      tweetContainer.setAttribute("data-media-max-width", video.width);
-      tweetContainer.setAttribute("data-media-max-height", video.height);
+   
   
       // Construct dynamic HTML based on the clip URL
       tweetContainer.innerHTML = `
@@ -281,8 +280,7 @@ const extractVimeoVideoId = (url) => {
   
       const tweetContainer = document.createElement("blockquote");
       tweetContainer.className = `twitter-tweet ${cssname}`;
-      tweetContainer.setAttribute("data-media-max-width", video.width);
-      tweetContainer.setAttribute("data-media-max-height", video.height);
+ 
   
       // Construct the <a> tag with the correct URL
       tweetContainer.innerHTML = `

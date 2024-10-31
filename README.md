@@ -70,6 +70,11 @@ Minor Changes:
 
 Patch Changes:
 
+
+ v1.2.2
+ - Fixed the issue with embedding x.com, which restores the embedded post with a card rather than just a video.
+
+
  v1.1.1
  - The border line has been removed from the embedded YouTube clip.
  
