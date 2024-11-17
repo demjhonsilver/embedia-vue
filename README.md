@@ -70,24 +70,13 @@ Minor Changes:
 
 Patch Changes:
 
+ v1.2.4
+ - Fixed the issue with embedding vimeo.com concerning the autoplay.
 
  v1.2.3
  - Fixed the issue with embedding x.com concerning the width.
 
- v1.2.2
- - Fixed the issue with embedding x.com, which restores the embedded post with a card rather than just a video.
 
-
- v1.1.1
- - The border line has been removed from the embedded YouTube clip.
- 
-
-  v1.1.2
- - Fixed the issue with embedding x.com.
-
-
- v1.1.3
- - Fixed the issue with muted vimeo.
 
 
 -------
@@ -121,8 +110,8 @@ Attributes | ![Facebook](https://img.shields.io/badge/Facebook-%231877F2.svg?sty
 Required? `width` | yes | yes | no  | yes
 Required? `height` | yes | no | no | no
 Required? `fullscreen` |  optional | no | no |  no
-Required? `controls` |  |  |  |  
-Required? `autoplay` |   |  |  |   
+Required? `controls` | no | no  | no | no
+Required? `autoplay` | no  | no | no  | no 
 Required? `cssname` |  optional  | optional | optional |  optional
 Required? `clip` |  yes | yes | yes | yes
 ---------
@@ -135,7 +124,7 @@ Attributes | ![YouTube](https://img.shields.io/badge/YouTube-%23FF0000.svg?style
 Required? `width` |  yes | yes | yes
 Required? `height` |  yes | yes | yes
 Required? `fullscreen` | optional | optional | optional
-Required? `controls` |  optional | optional | optional
+Required? `controls` |  optional | optional | no
 Required? `autoplay` | optional | optional |optional
 Required? `cssname` | optional | optional | optional
 Required? `clip` |  yes | yes | yes

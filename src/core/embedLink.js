@@ -99,35 +99,36 @@
       throw new Error("Invalid Dailymotion video URL");
     };
     
+  
     const embedDailymotion = (video, container, cssname) => {
-      const videoUrl = video.videoUrl;
-      const videoId = extractDailymotionVideoId(videoUrl);
+      const clip = video.clip;
+      const videoId = extractDailymotionVideoId(clip);
       const autoplayValue = video.autoplay ? '1' : '0';
       const controlsValue = video.controls ? '1' : '0';
       const fullscreenValue = video.fullscreen ? '1' : '0';
-    
+  
+      // Log iframe URL for debugging
       const iframe = document.createElement("iframe");
       iframe.src = `https://www.dailymotion.com/embed/video/${videoId}?autoplay=${autoplayValue}&controls=${controlsValue}&fullscreen=${fullscreenValue}`;
       iframe.width = video.width || 640;
       iframe.height = video.height || 360;
+  
+      iframe.allowFullscreen = video.fullscreen !== false; // Allow fullscreen unless explicitly disabled
+    
       iframe.frameBorder = "0";
-      iframe.allowFullscreen = true;
-    
+  
+  
       iframe.className = cssname;
-    
       container.appendChild(iframe);
-    };
+  };
+  
     
     
     
     
     
-    
-    
-    
-    
-    
-        // Function to extract Vimeo video ID from a URL
+
+// Function to extract Vimeo video ID from a URL
 const extractVimeoVideoId = (url) => {
   const videoIdMatch = url.match(/\/(\d+)/);
   if (videoIdMatch && videoIdMatch[1]) {
@@ -137,56 +138,92 @@ const extractVimeoVideoId = (url) => {
     return "";
   }
 };
+
+// Function to embed Vimeo video
+const embedVimeo = (video, container, cssname) => {
+  const emWidth = video.width || 640;  // Default width if not provided
+  const emHeight = video.height || 360; // Default height if not provided
+  const controlsValue = video.controls !== undefined ? video.controls : true;  // Default to true if not provided
+  const autoplayValue = video.autoplay === true; // Autoplay set to boolean true
+  const loopValue = video.loop === "true"; // Convert loop to boolean
+  const fullscreenValue = video.fullscreen === true;  // Fullscreen option, converted to boolean
+
+  // Extract the Vimeo video ID from the URL
+  const videoId = extractVimeoVideoId(video.clip);
   
-  const embedVimeo = (video, container, cssname) => {
-    const emWidth = video.width || 640;
-    const emHeight = video.height || 360;
-    const controlsValue = video.controls;
-    const autoplayValue = video.autoplay === "true"; // Convert to boolean
-    const loopValue = video.loop === "true"; // Convert to boolean
-  
- 
-    const videoId = extractVimeoVideoId(video.videoUrl);
-  
-    const playerDiv = document.createElement("div");
-    playerDiv.className = `video-${videoCount} ${cssname}`;
-    playerDiv.dataset.eWidth = emWidth;
-    playerDiv.dataset.eHeight = emHeight;
-    playerDiv.dataset.efullscreen = video.fullscreen;
-    playerDiv.dataset.eVideoId = videoId;
-  
-    container.appendChild(playerDiv);
-  
-    const script = document.createElement("script");
-    script.src = "https://player.vimeo.com/api/player.js";
-    script.async = true;
-  
-    script.onload = () => {
-      const vimeoPlayer = new window.Vimeo.Player(playerDiv, {
-        id: videoId,
-        width: emWidth,
-        height: emHeight,
-        controls: controlsValue,
-        autoplay: autoplayValue,
-        muted: autoplayValue,
-        loop: loopValue, // Set loop based on boolean value
-      });
-  
-      vimeoPlayer.ready().then(() => {
-        // Additional player methods can be used here if needed
-      });
-    };
-  
-    document.body.appendChild(script);
-  
-    return () => {
-      if (playerDiv) {
-        playerDiv.innerHTML = "";
+  // Create a div to hold the Vimeo player
+  const playerDiv = document.createElement("div");
+  playerDiv.className = `video-${videoId} ${cssname}`;
+  playerDiv.dataset.eWidth = emWidth;
+  playerDiv.dataset.eHeight = emHeight;
+  playerDiv.dataset.efullscreen = fullscreenValue; // Data attribute for fullscreen
+  playerDiv.dataset.eVideoId = videoId;
+
+  // Append the player container to the given container
+  container.appendChild(playerDiv);
+
+  // Load the Vimeo API script dynamically
+  const script = document.createElement("script");
+  script.src = "https://player.vimeo.com/api/player.js";
+  script.async = true;
+
+  script.onload = () => {
+    // Initialize the Vimeo player after the script has loaded
+    const vimeoPlayer = new window.Vimeo.Player(playerDiv, {
+      id: videoId,
+      width: emWidth,
+      height: emHeight,
+      controls: controlsValue,  // Show controls
+      autoplay: autoplayValue,  // Autoplay based on the passed value (true/false)
+      muted: autoplayValue,     // Mute if autoplay is true (to comply with browser restrictions)
+      loop: loopValue,       // Loop based on the loop value
+      fullscreen: fullscreenValue,      
+    });
+
+    // Ready callback
+    vimeoPlayer.ready().then(() => {
+      console.log('Vimeo player is ready');
+
+      // If fullscreen is set to false, hide the fullscreen button from the controls
+      if (fullscreenValue === false) {
+        const iframe = playerDiv.querySelector("iframe");
+        const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+        
+        // Wait for the player to load before attempting to hide fullscreen button
+        const interval = setInterval(() => {
+          const fullscreenButton = iframeDocument.querySelector('.vimeo-control-bar .fullscreen');
+          
+          if (fullscreenButton) {
+            fullscreenButton.style.display = 'none';  // Hide fullscreen button in controls
+            clearInterval(interval);
+          }
+        }, 100);
       }
-      document.body.removeChild(script);
-    };
+    }).catch((error) => {
+      console.error('Error loading Vimeo player:', error);
+    });
   };
+
+  // Append the script to the body to load it
+  document.body.appendChild(script);
+
+  // Cleanup function to remove the player and script when no longer needed
+  return () => {
+    if (playerDiv) {
+      playerDiv.innerHTML = "";
+    }
+    if (script && script.parentNode) {
+      document.body.removeChild(script);
+    }
+  };
+};
     
+    
+
+
+
+
+
     
   const embedTwitter = (video, container, cssname) => {
     
@@ -423,30 +460,37 @@ const extractVimeoVideoId = (url) => {
     
     
     
-    
     const embedFacebook = (video, container, cssname) => {
-      const videoUrl = video.videoUrl;
-      const autoplay = video.autoplay ? 'autoplay=true' : 'autoplay=false';
-      const muted = autoplay ? 'muted=true' : 'muted=false';
+      const clip = video.clip;
+      const autoplayc = video.autoplay ?? true; // Default to true if not specified
+      const muted = autoplayc; // Default to true if not specified
       const emWidth = video.width || 640;
       const emHeight = video.height || 360;
     
+      // Construct the video URL with parameters
+      const videoSrc = new URL('https://www.facebook.com/plugins/video.php');
+      videoSrc.searchParams.set('href', clip);
+      videoSrc.searchParams.set('width', emWidth);
+      videoSrc.searchParams.set('height', emHeight);
+      videoSrc.searchParams.set('show_text', 'false');
+      videoSrc.searchParams.set('autoplay', autoplayc ? 'true' : 'false'); // Autoplay only if muted
+      videoSrc.searchParams.set('muted', muted ? '1' : '0');
+    
       // Create an iframe element for the Facebook video
       const iframe = document.createElement('iframe');
-      iframe.setAttribute('src', `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(videoUrl)}&width=${emWidth}&height=${emHeight}&show_text=false&${autoplay}&${muted}`);
-      iframe.setAttribute('width', emWidth);
-      iframe.setAttribute('height', emHeight);
-      iframe.setAttribute('frameborder', '0');
-    
-      if (video.fullscreen) {
-        iframe.setAttribute('allowfullscreen', 'true');
-      }
-    
+      iframe.src = videoSrc.toString();
+      iframe.width = emWidth;
+      iframe.height = emHeight;
+      iframe.frameBorder = '0';
+       // Allow autoplay and fullscreen permissions
+      iframe.allow = 'autoplay; fullscreen'; // Permissions for autoplay and fullscreen
+      iframe.allowFullscreen = video.fullscreen !== false; // Allow fullscreen unless explicitly disabled
     
       iframe.className = `video-${videoCount} ${cssname} custom-facebook`;
     
       videoCount++;
     
+      // Append iframe to the container
       container.appendChild(iframe);
     };
     
