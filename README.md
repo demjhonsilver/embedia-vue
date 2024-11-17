@@ -71,23 +71,10 @@ Minor Changes:
 Patch Changes:
 
 
- v1.2.3
- - Fixed the issue with embedding x.com concerning the width.
-
- v1.2.2
- - Fixed the issue with embedding x.com, which restores the embedded post with a card rather than just a video.
+ v1.2.5
+ - Fixed the issue with embedding Vimeo videos regarding autoplay.
 
 
- v1.1.1
- - The border line has been removed from the embedded YouTube clip.
- 
-
-  v1.1.2
- - Fixed the issue with embedding x.com.
-
-
- v1.1.3
- - Fixed the issue with muted vimeo.
 
 
 -------
@@ -118,9 +105,9 @@ npm install embedia-vue
 ## Embed-video
 Attributes | ![Facebook](https://img.shields.io/badge/Facebook-%231877F2.svg?style=for-the-badge&logo=Facebook&logoColor=white) | ![Instagram](https://img.shields.io/badge/Instagram-%23E4405F.svg?style=for-the-badge&logo=Instagram&logoColor=white) | ![TikTok](https://img.shields.io/badge/TikTok-%23000000.svg?style=for-the-badge&logo=TikTok&logoColor=white)  | ![X](https://img.shields.io/badge/X-%23000000.svg?style=for-the-badge&logo=X&logoColor=white) |
 ------ | -------- | ----------|---------- |------------
-Required? `width` | yes | yes | no  | yes
-Required? `height` | yes | no | no | no
-Required? `fullscreen` |  optional | no | no |  no
+Required? `width` | yes |  |   | 
+Required? `height` | yes |  |  | 
+Required? `fullscreen` |  optional |  |   |  
 Required? `controls` |  |  |  |  
 Required? `autoplay` |   |  |  |   
 Required? `cssname` |  optional  | optional | optional |  optional
@@ -134,8 +121,8 @@ Attributes | ![YouTube](https://img.shields.io/badge/YouTube-%23FF0000.svg?style
 ------ | -------- | ----------|---------- | 
 Required? `width` |  yes | yes | yes
 Required? `height` |  yes | yes | yes
-Required? `fullscreen` | optional | optional | optional
-Required? `controls` |  optional | optional | optional
+Required? `fullscreen` | optional | optional | 
+Required? `controls` |  optional | optional | 
 Required? `autoplay` | optional | optional |optional
 Required? `cssname` | optional | optional | optional
 Required? `clip` |  yes | yes | yes
