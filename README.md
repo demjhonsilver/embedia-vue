@@ -68,7 +68,7 @@ Major Changes:
 
 - Easy to set-up and responsive.
 - Supports embedding one or more videos from platforms including TikTok, YouTube, YouTube Shorts, X, Dailymotion, and Vimeo.
-
+- For testing: npm run test
 ___________
 
 
@@ -239,7 +239,7 @@ Remove this: place-items: center;
 body {
   margin: 0;
   display: block; 
-  place-items: center; // Remove this code to make it responsive, if it exists.
+  place-items: center; // Remove this code, if it exists, to make it responsive.
   min-width: 320px;
   min-height: 100vh;
 }
