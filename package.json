@@ -1,0 +1,54 @@
+{
+  "name": "embedia-vue",
+  "version": "2.0.0",
+  "description": "A vue component package to embed videos such as TikTok, YouTube/Shorts, Twitter/X, Vimeo, and Dailymotion.",
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",
+  "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/demjhonsilver/embedia-vue.git"
+  },
+  "homepage": "https://demjhonsilver.github.io/embedia-vue-docs/",
+  "scripts": {
+    "build": "vite build",
+    "types": "vue-tsc --declaration --emitDeclarationOnly",
+    "prepublishOnly": "npm run build && npm run types",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@babel/preset-env": "^7.25.4",
+    "@babel/preset-typescript": "^7.0.0",
+    "@types/node": "^22.5.2",
+    "@vitejs/plugin-vue": "^4.6.2",
+    "@vue/test-utils": "^2.4.0-alpha.2",
+    "jsdom": "^27.1.0",
+    "typescript": "^5.5.4",
+    "vite": "^4.5.3",
+    "vitest": "^4.0.8",
+    "vue": "^3.4.38",
+    "vue-tsc": "^2.1.4"
+  },
+  "peerDependencies": {
+    "vue": "^3.0.0"
+  },
+  "keywords": [
+    "embed",
+    "video",
+    "embed video",
+    "youtube",
+    "vimeo",
+    "tiktok",
+    "dailymotion",
+    "twitter",
+    "x",
+    "shorts",
+    "javascript",
+    "typescript",
+    "vue"
+  ],
+  "author": "Demjhon Silver",
+  "license": "MIT"
+}

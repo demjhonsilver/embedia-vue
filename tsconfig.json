@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "es2022",            // Use ES2022 or later
+    "module": "esnext",            // Use ESNext or later
+    "declaration": true,           // Enable declaration files
+    "declarationMap": true,        // Optional: Enable declaration maps
+    "outDir": "dist",              // Output directory for compiled files
+    "strict": true,                // Enable all strict type-checking options
+    "esModuleInterop": true,       // Enable compatibility with CommonJS modules
+    "skipLibCheck": true,          // Skip type checking of declaration files
+    "jsx": "preserve",             // Preserve JSX for Vue files
+    "moduleResolution": "node"     // Module resolution strategy
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue"                // Include .vue files for type checking
+  ],
+  "exclude": [
+    "node_modules",               // Exclude third-party dependencies
+    "dist"                        // Exclude output directory to avoid redundant processing
+  ]
+}
